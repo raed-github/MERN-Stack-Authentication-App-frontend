@@ -15,7 +15,7 @@ const Home = ()=>{
             }
         }
         fetchTasks()
-    },[])
+    },[dispatch])
     return(
         <div className="home">
             <div className="tasks">

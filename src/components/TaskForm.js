@@ -3,10 +3,10 @@ import { useTaskContext } from './../hooks/useTaskContext';
 
 const TaskForm = ()=>{
     const { dispatch } = useTaskContext()
-    const [task,setTask] = useState(null)
+    const [task,setTask] = useState({})
     const [error,setError] = useState()
     const onChange = (e)=>{
-        e.preventDefault()
+        e.preventDefault()       
         var taskName = e.target.name
         var val = e.target.value
         if(val && !isNaN(val)){
@@ -55,6 +55,7 @@ const TaskForm = ()=>{
                     pattern='[0-9]'
                     value={task?task.priority:''}
                     onChange={onChange}
+
                 />
                 <button>Add Task</button>
                 {error && <div className="error">{error}</div>}
