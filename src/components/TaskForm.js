@@ -5,6 +5,7 @@ const TaskForm = ()=>{
     const { dispatch } = useTaskContext()
     const [task,setTask] = useState({})
     const [error,setError] = useState()
+    const [emptyFields,setEmptyFields] = useState([])
     const onChange = (e)=>{
         e.preventDefault()       
         var taskName = e.target.name
@@ -27,6 +28,7 @@ const TaskForm = ()=>{
         const json = await response.json()
         if(!response.ok){
             setError(json.error)
+            setEmptyFields(json.emptyFields)
             console.log(error)
         }
         if(response.ok){
@@ -34,6 +36,7 @@ const TaskForm = ()=>{
             console.log('task added')
             dispatch({type:'CREATE_TASK',payload:task})
             setTask()
+            setEmptyFields([])
         }
     }
     return(
@@ -46,6 +49,7 @@ const TaskForm = ()=>{
                     name='taskName'
                     value={task?task.taskName:''}
                     onChange={onChange}
+                    className={emptyFields.includes('taskName')?'error':''}
                 />
                 <label>Task Priority</label>
                 <input 
@@ -55,6 +59,7 @@ const TaskForm = ()=>{
                     pattern='[0-9]'
                     value={task?task.priority:''}
                     onChange={onChange}
+                    className={emptyFields.includes('priority')?'error':''}
 
                 />
                 <button>Add Task</button>
